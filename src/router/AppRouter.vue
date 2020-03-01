@@ -6,6 +6,8 @@
       <router-link to="/register">注册</router-link>
     </div>
     <router-view></router-view>
+    <router-view name="side-nav"></router-view>
+    <router-view name="bottom"></router-view>
   </div>
 </template>
 

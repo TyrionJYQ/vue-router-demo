@@ -5,31 +5,63 @@ import Category from '@views/Category'
 import Register from '@views/Register'
 import Login from '@views/Login'
 import MainPage from '@views/Main'
-// import Detail from '@components/Detail'
+import NotFound from '@components/test/404'
+import Random from '@components/test/Random'
+import NavBar from '@components/test/NavBar'
+import Bottom from '@components/test/Bottom'
 
 export default [
     {
         path: '/main',
-        component: MainPage,
+        name: 'mainPage',
+        components: {
+            default: MainPage,
+            'side-nav': NavBar,
+            bottom: Bottom
+        },
+        // beforeEnter: (to,from,next) => {   //路由守卫
+        //     next('/login')
+        // },
         children: [
-            { path: 'about', component: About },
-            { path: 'home', component: Home },
-            { path: 'category', component: Category },
-            { path: 'articles', component: Articles },
-            { name: 'detail',
-              path: 'articles/article/:id', 
-              component: resolve => require(['@components/Detail'],resolve),
-                // component: () => import('../components/Detail/index.vue'),
-             props: true
+            {
+                path: 'about',
+                component: About,
+                name: 'about',
+                // 别名测试
+                // alias:['ggg','over'],   //数组 多个别名
+                alias: 'ggg' // 字符串,一个别名 
+            },
+            { path: 'home', component: Home, name: 'home' },
+            { path: 'category', component: Category, name: 'category' },
+            { path: 'articles', component: Articles, name: 'articles' },
+            {
+                name: 'detail',
+                path: 'articles/:id',
+                component: resolve => require(['@components/Detail'], resolve),
+                props: true,
+                children: [
+                    {
+                        path: 'p',
+                        component: Random
+                    }
+                ]
             }
         ]
     },
-    // {
-    //     name: 'detail',
-    //     path: '/main/articles/:detail',
-    //     component: Detail
-    // },
 
-    { path: '/login', component: Login },
-    { path: '/register', component: Register }
+    // { path: '/', redirect: '/main/home' },
+    // { path: '/', redirect: {name: 'about'} },
+    {
+        path: '/',     // 重定向
+        redirect: to => {
+            console.log(to)
+            // return 'main/articles'  //字符形式
+            return { name: 'articles' }  // 对象形式
+        }
+
+    },
+
+    { path: '/login', component: Login, name: 'login' },
+    { path: '/register', component: Register, name: 'register' },
+    { path: '*', component: NotFound, name: '404', name: '*' }
 ]

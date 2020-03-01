@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-      <Tab/>
-    <router-view></router-view>
+    <Tab/>
+    <router-view class="content"></router-view>
   </div>
 </template>
 
@@ -14,4 +14,17 @@ export default {
     }
 };
 </script>
+
+
+<style scoped>
+.content {
+  /* height: 100px; */
+  background-color: aquamarine;
+  height: auto;
+  margin-left: 80px;
+}
+.side-nav {
+  background-color: blueviolet; 
+}
+</style>
 

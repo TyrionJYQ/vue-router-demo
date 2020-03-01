@@ -1,6 +1,6 @@
 <template>
     <div id="login">
-        {{msg}}
+       <input type="button" value="登录" @click="doLogin">
        
     </div>
 </template>
@@ -12,6 +12,16 @@ export default {
     data() {
         return {
             msg: 'login'
+        }
+    },
+    methods: {
+        doLogin() {
+            setTimeout(() => {
+                console.log('登录成功')
+                localStorage.setItem('IS_LOGIN', true)
+                this.$router.push({name: 'mainPage'})
+                },300
+            )
         }
     }
 }

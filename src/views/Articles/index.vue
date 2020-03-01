@@ -26,6 +26,14 @@ export default {
         //   this.$router.push({path,params:{article: this.articles[i]}})
       }
   },
+  beforeRouteLeave(to, from,next) {
+    var res = confirm('信息尚未保存，是否离开?')
+    if(res) {
+        next()
+      } else {
+        next(false)
+      }
+  },
   created() {
     getArticles(paginationConfig).then(
       data => {
